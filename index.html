@@ -572,6 +572,243 @@
         .c-COSMCN{background:rgba(234,88,12,.15);color:#fb923c;border:1px solid rgba(234,88,12,.3);}
         .c-RJSMCN{background:rgba(234,88,12,.15);color:#fb923c;border:1px solid rgba(234,88,12,.3);}
         .c-multi{background:rgba(100,116,139,.1);color:#94a3b8;border:1px solid #243550;}
+
+        /* MODO ADMIN STYLES */
+        .btn-admin {
+            background: rgba(255,255,255,0.05);
+            border: 1px solid var(--glass-border);
+            color: var(--text-secondary);
+            width: 44px; height: 44px; border-radius: 12px;
+            cursor: pointer; display: flex; align-items: center; justify-content: center;
+            transition: all 0.3s;
+            margin-right: 8px;
+        }
+        .btn-admin.active {
+            background: var(--color-warning);
+            color: black;
+            border-color: var(--color-warning);
+            box-shadow: 0 0 15px var(--color-warning-glow);
+        }
+        .admin-only { display: none !important; }
+        body.is-admin .admin-only { display: flex !important; }
+        
+        /* Ajuste para bloquear APENAS as seleções de produtos/curvas quando não for admin */
+        body:not(.is-admin) .equipment-card select,
+        body:not(.is-admin) .furnace-row select {
+            cursor: not-allowed !important;
+            pointer-events: none !important;
+            opacity: 0.6;
+            filter: grayscale(0.8);
+        }
+
+        /* =========================================================
+           APONTAMENTO DE PRODUÇÃO – DESIGN DASHBOARD (DARK)
+        ========================================================= */
+        .ap-container {
+            background: transparent;
+            color: #fff;
+            padding: 10px;
+            max-width: 1200px;
+            margin: 0 auto;
+            animation: fadeInUp 0.5s ease-out;
+        }
+
+        .ap-form-header {
+            background: var(--glass-bg);
+            backdrop-filter: blur(15px);
+            border: 1px solid var(--glass-border);
+            color: white;
+            padding: 18px 25px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            border-radius: 12px;
+            margin-bottom: 25px;
+            box-shadow: var(--shadow-lg);
+        }
+
+        .ap-form-header h2 { margin: 0; font-size: 1.4rem; font-weight: 800; color: #fff; letter-spacing: 1px; }
+        .ap-datetime { font-family: monospace; font-size: 1.1rem; color: #60a5fa; font-weight: 700; }
+
+        .ap-container fieldset {
+            border: 1px solid var(--glass-border);
+            border-radius: 12px;
+            background: var(--glass-bg);
+            backdrop-filter: blur(8px);
+            margin-bottom: 20px;
+            padding: 25px;
+            box-shadow: var(--shadow-md);
+        }
+
+        .ap-container legend {
+            font-weight: 900;
+            color: #60a5fa;
+            padding: 0 15px;
+            text-transform: uppercase;
+            font-size: 0.85rem;
+            letter-spacing: 2px;
+            text-shadow: 0 0 10px rgba(96,165,250,0.3);
+        }
+
+        .ap-grid-forms {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 25px;
+        }
+
+        .ap-form-group { margin-bottom: 5px; }
+
+        /* Estilo para Seleção Múltipla de Equipamentos */
+        .ap-multi-select-container {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 10px;
+            padding: 15px;
+            background: rgba(0,0,0,0.3);
+            border: 1px solid var(--glass-border);
+            border-radius: 8px;
+            min-height: 48px;
+        }
+
+        .ap-check-item {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            background: rgba(255,255,255,0.05);
+            padding: 8px 15px;
+            border-radius: 6px;
+            cursor: pointer;
+            border: 1px solid transparent;
+            transition: all 0.2s;
+            user-select: none;
+        }
+
+        .ap-check-item:hover { background: rgba(255,255,255,0.1); border-color: rgba(96,165,250,0.3); }
+
+        .ap-check-item.active {
+            background: rgba(96,165,250,0.2);
+            border-color: #60a5fa;
+            color: #fff;
+        }
+
+        .ap-check-item input[type="checkbox"] {
+            display: none;
+        }
+
+        .ap-check-item::before {
+            content: "";
+            width: 14px;
+            height: 14px;
+            border: 2px solid var(--text-tertiary);
+            border-radius: 3px;
+            transition: all 0.2s;
+        }
+
+        .ap-check-item.active::before {
+            background: #60a5fa;
+            border-color: #60a5fa;
+            box-shadow: 0 0 8px rgba(96,165,250,0.5);
+        }
+
+        .ap-container label {
+            display: block;
+            margin-bottom: 8px;
+            font-weight: 700;
+            color: var(--text-secondary);
+            font-size: 0.75rem;
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+        }
+
+        .ap-container input[type="text"],
+        .ap-container input[type="time"],
+        .ap-container select,
+        .ap-container textarea {
+            width: 100%;
+            padding: 12px 15px;
+            background: rgba(0,0,0,0.4);
+            border: 1px solid var(--glass-border);
+            border-radius: 8px;
+            color: #fff;
+            font-size: 0.95rem;
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+
+        .ap-container input:focus, .ap-container select:focus, .ap-container textarea:focus {
+            outline: none;
+            border-color: #60a5fa;
+            background: rgba(0,0,0,0.6);
+            box-shadow: 0 0 15px rgba(96,165,250,0.2);
+        }
+
+        .ap-container textarea { height: 90px; resize: vertical; }
+
+        .ap-btn-submit {
+            background: linear-gradient(135deg, #1d4ed8, #2563eb);
+            color: white;
+            padding: 18px;
+            border: none;
+            border-radius: 10px;
+            font-size: 1.1rem;
+            font-weight: 800;
+            cursor: pointer;
+            width: 100%;
+            transition: all 0.3s;
+            margin-top: 10px;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            box-shadow: 0 4px 15px rgba(37,99,235,0.3);
+        }
+
+        .ap-btn-submit:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 8px 25px rgba(37,99,235,0.5);
+            filter: brightness(1.1);
+        }
+
+        .ap-history { margin-top: 40px; }
+        .ap-history h2 { 
+            color: #fff; font-size: 1.5rem; margin-bottom: 20px; 
+            display: flex; align-items: center; gap: 12px;
+        }
+        .ap-history h2::before {
+            content: ""; display: block; width: 4px; height: 24px; background: #60a5fa; border-radius: 2px;
+        }
+        
+        .ap-table-wrap { 
+            background: var(--glass-bg); 
+            backdrop-filter: blur(10px);
+            border: 1px solid var(--glass-border);
+            border-radius: 12px; 
+            overflow: hidden;
+            box-shadow: var(--shadow-lg); 
+        }
+        .ap-table { width: 100%; border-collapse: collapse; min-width: 900px; }
+        .ap-table th, .ap-table td { text-align: left; padding: 15px 20px; border-bottom: 1px solid rgba(255,255,255,0.05); }
+        .ap-table th { 
+            background: rgba(255,255,255,0.03); 
+            color: var(--text-tertiary); 
+            font-size: 0.75rem; 
+            text-transform: uppercase; 
+            letter-spacing: 1px;
+            font-weight: 700;
+        }
+        .ap-table td { font-size: 0.95rem; color: #e2e8f0; }
+
+        .ap-table tr:hover td { background: rgba(255,255,255,0.02); }
+
+        .ap-status-badge {
+            padding: 5px 12px;
+            border-radius: 6px;
+            color: white;
+            font-weight: 800;
+            font-size: 10px;
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+        }
+        .ap-badge-falha { background: rgba(217, 83, 79, 0.2); color: #f87171; border: 1px solid rgba(217, 83, 79, 0.3); }
+        .ap-badge-parada { background: rgba(240, 173, 78, 0.2); color: #fbbf24; border: 1px solid rgba(240, 173, 78, 0.3); }
+        .ap-badge-obs { background: rgba(92, 184, 92, 0.2); color: #4ade80; border: 1px solid rgba(92, 184, 92, 0.3); }
     </style>
     <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 </head>
@@ -593,10 +830,17 @@
                 <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="22 12 18 12 15 21 9 3 6 12 2 12"/></svg>
                 Análises Comparativas
             </button>
+            <button class="tab-btn" onclick="switchTab('falhas')" id="tab-btn-falhas">
+                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><path d="M12 6v6l4 2"/></svg>
+                Apontamento
+            </button>
         </div>
 
         <!-- ACTIONS (somente aparecem na aba Dashboard) -->
         <div class="header-actions" id="dash-actions">
+            <button id="adminButton" class="btn-admin" onclick="toggleAdmin()" title="Modo Administrador">
+                <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="11" width="18" height="11" rx="2" ry="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/></svg>
+            </button>
             <button id="fsButton" class="theme-toggle" onclick="toggleFullScreen()" title="Tela Cheia">
                 <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M8 3H5a2 2 0 0 0-2 2v3m18 0V5a2 2 0 0 0-2-2h-3m0 18h3a2 2 0 0 0 2-2v-3M3 16v3a2 2 0 0 0 2 2h3"></path></svg>
             </button>
@@ -608,15 +852,12 @@
                 <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg>
                 Mensagem Importante
             </button>
-            <button class="btn-message btn-manage-lists" style="background:rgba(59,130,246,0.15);color:#93c5fd;border-color:rgba(59,130,246,0.3);" onclick="openOptionsModal()">
+            <button class="btn-message btn-manage-lists admin-only" style="background:rgba(59,130,246,0.15);color:#93c5fd;border-color:rgba(59,130,246,0.3);" onclick="openOptionsModal()">
                 <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 20h9"/><path d="M16.5 3.5a2.121 2.121 0 0 1 3 3L7 19l-4 1 1-4L16.5 3.5z"/></svg>
                 Gerenciar Listas
             </button>
-            <button class="btn-save" style="background:#8b5cf6;margin-right:8px;" onclick="saveAsHtml()" title="Baixar backup">
-                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>
-                Salvar Como
-            </button>
-            <button id="btn-save" class="btn-save" onclick="saveConfiguration()">
+
+            <button id="btn-save" class="btn-save admin-only" onclick="saveConfiguration()">
                 <svg width="20" height="20" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2" fill="none" stroke-linecap="round" stroke-linejoin="round"><path d="M19 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11l5 5v11a2 2 0 0 1-2 2z"/><polyline points="17 21 17 13 7 13 7 21"/><polyline points="7 3 7 8 15 8"/></svg>
                 Salvar Config.
             </button>
@@ -645,6 +886,95 @@
             <div class="pfs-day-bar" id="dayBar"></div>
             <div class="pfs-stats-bar" id="statsBar"></div>
             <div class="pfs-grid-wrapper" id="pfsGrid"></div>
+        </div>
+    </div>
+
+    <!-- ============================================================
+         PÁGINA 3 – APONTAMENTO DE PRODUÇÃO
+    ============================================================ -->
+    <div id="tab-falhas" class="tab-page">
+        <div class="ap-container">
+            
+            <div class="ap-form-header">
+                <h2>⚙️ Sistema de Apontamento - Produção</h2>
+                <div class="ap-datetime" id="apTimeLabel">Data: --/--/---- | --:--</div>
+            </div>
+
+            <form id="apForm" onsubmit="event.preventDefault(); registerApontamento();">
+                <fieldset>
+                    <legend>1. Identificação da Célula & Equipamento</legend>
+                    <div class="ap-grid-forms">
+                        <div class="ap-form-group">
+                            <label for="id-cedula">Célula:</label>
+                            <select id="id-cedula" name="id-cedula" required onchange="updateApEquipments()">
+                                <option value="">Selecione a Célula...</option>
+                            </select>
+                        </div>
+                        <div class="ap-form-group" style="grid-column: span 2;">
+                            <label>Selecione o(s) Equipamento(s):</label>
+                            <div id="apEquipContainer" class="ap-multi-select-container">
+                                <span style="color:var(--text-tertiary); font-size: 0.85rem; font-style: italic;">Selecione uma célula primeiro...</span>
+                            </div>
+                        </div>
+                    </div>
+                </fieldset>
+
+                <fieldset>
+                    <legend>2. Detalhes da Parada/Falha</legend>
+                    <div class="ap-grid-forms">
+                        <div class="ap-form-group">
+                            <label for="tipo-parada">Tipo de Apontamento:</label>
+                            <select id="tipo-parada" name="tipo-parada" required>
+                                <option value="">Selecione o Tipo...</option>
+                                <option value="FALHA">Falha Crítica (Manutenção)</option>
+                                <option value="PARADA">Parada Operacional (Operador)</option>
+                                <option value="OBSERVAÇÃO">Observação de Processo</option>
+                            </select>
+                        </div>
+                        <div class="ap-form-group">
+                            <label for="id-operador">ID do Operador:</label>
+                            <input type="text" id="id-operador" name="id-operador" placeholder="Digite seu registro ou nome" required>
+                        </div>
+                        <div class="ap-form-group">
+                            <label for="hora-inicio">Início da Parada:</label>
+                            <input type="time" id="hora-inicio" name="hora-inicio" required>
+                        </div>
+                        <div class="ap-form-group">
+                            <label for="hora-fim">Fim da Parada (Se finalizado):</label>
+                            <input type="time" id="hora-fim" name="hora-fim">
+                        </div>
+                        <div class="ap-form-group" style="grid-column: span 2;">
+                            <label for="descricao-falha">Descrição da Falha ou Causa da Parada:</label>
+                            <textarea id="descricao-falha" name="descricao-falha" placeholder="Descreva brevemente o problema, ex: 'Robô SP1 parou por sensor de segurança acionado' ou 'Aguardando material na CENT 2 de Britagem'." required></textarea>
+                        </div>
+                    </div>
+                </fieldset>
+
+                <button type="submit" class="ap-btn-submit">Registrar Apontamento</button>
+            </form>
+
+            <div class="ap-history">
+                <h2>Histórico Recente de Paradas</h2>
+                <div class="ap-table-wrap">
+                    <table class="ap-table">
+                        <thead>
+                            <tr>
+                                <th>Data/Hora</th>
+                                <th>Célula</th>
+                                <th>Equip.</th>
+                                <th>Status</th>
+                                <th>Causa/Descrição</th>
+                                <th>Operador</th>
+                                <th style="width:40px;"></th>
+                            </tr>
+                        </thead>
+                        <tbody id="apHistBody">
+                            <!-- Inserido via JS -->
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+
         </div>
     </div>
 
@@ -828,6 +1158,34 @@ function renderMessagePanel() {
 function clearMessagePanel() {
     currentMessage = null;
     renderMessagePanel();
+}
+
+// ===========================================================
+//  MODO ADMIN
+// ===========================================================
+let isAdmin = false;
+
+function toggleAdmin() {
+    if (!isAdmin) {
+        const pass = prompt("Digite a senha de Administrador para destravar:");
+        if (pass === "Lab123") {
+            isAdmin = true;
+            document.body.classList.add('is-admin');
+            document.getElementById('adminButton').classList.add('active');
+            document.getElementById('adminButton').innerHTML = `<svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="11" width="18" height="11" rx="2" ry="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4M12 11v4"/></svg>`;
+            renderDashboard();
+            showToast("Painel Destravado!");
+        } else {
+            showToast("Senha Incorreta!", true);
+        }
+    } else {
+        isAdmin = false;
+        document.body.classList.remove('is-admin');
+        document.getElementById('adminButton').classList.remove('active');
+        document.getElementById('adminButton').innerHTML = `<svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="11" width="18" height="11" rx="2" ry="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/></svg>`;
+        renderDashboard();
+        showToast("Painel Bloqueado.");
+    }
 }
 
 function createMessagePanelCard() {
@@ -1182,6 +1540,7 @@ function setFurnaceStatus(row, status) {
 //  SAVE / LOAD
 // ===========================================================
 async function saveConfiguration() {
+    if (!isAdmin) { showToast("Acesso Negado: Entre no modo Admin!", true); return; }
     const newState = getCurrentState();
     localStorage.setItem('lab_flow_config', JSON.stringify(newState));
     appState = newState;
@@ -1194,26 +1553,7 @@ async function saveConfiguration() {
     showToast("Configuração Salva!");
 }
 
-function saveAsHtml() {
-    const currentState = getCurrentState();
-    let htmlContent = document.documentElement.outerHTML;
-    htmlContent = '<!DOCTYPE html>\n' + htmlContent;
-    const stateStr = JSON.stringify(currentState);
-    const optionsDefaultStr = JSON.stringify(OPTIONS_DEFAULT);
-    htmlContent = htmlContent.replace(/let appState = \{.*\};/, `let appState = ${stateStr};`);
-    htmlContent = htmlContent.replace(/let OPTIONS_DEFAULT = \[.*\];/, `let OPTIONS_DEFAULT = ${optionsDefaultStr};`);
-    const blob = new Blob([htmlContent], { type: 'text/html' });
-    const url = URL.createObjectURL(blob);
-    const a = document.createElement('a');
-    const dataHora = new Date().toLocaleDateString().replace(/\//g, '-') + '_' + new Date().getHours() + 'h' + new Date().getMinutes();
-    const sugerido = `dashboard_unificado_${dataHora}.html`;
-    const nomeArquivo = prompt("Como deseja nomear o arquivo de backup?", sugerido);
-    if (nomeArquivo) {
-        a.href = url; a.download = nomeArquivo.endsWith('.html') ? nomeArquivo : nomeArquivo + '.html';
-        document.body.appendChild(a); a.click(); document.body.removeChild(a); URL.revokeObjectURL(url);
-        showToast("Backup criado com sucesso!");
-    }
-}
+
 
 function getCurrentState() {
     const cards = document.querySelectorAll('.equipment-card');
@@ -1340,8 +1680,7 @@ function removeOption(type, index) {
 }
 
 async function saveOptionsChanges() {
-    const password = prompt("Digite a senha para salvar:");
-    if (password !== "Lab1234") { showToast("Senha Incorreta!", true); return; }
+
     OPTIONS_DEFAULT = [...tempOptionsDefault];
     const optionsData = { default: OPTIONS_DEFAULT };
     localStorage.setItem('lab_flow_options', JSON.stringify(optionsData));
@@ -1502,6 +1841,425 @@ function initPainelFluxo(){
     }
     scheduleNextMidnight();
 }
+// ===========================================================
+//  GESTÃO DE FALHAS – RELATÓRIO DE OCORRÊNCIAS
+// ===========================================================
+let failures = [];
+let activeFailureFilter = 'TODOS';
+
+const PRIORITY_STYLES = {
+    'ALTA':  { color: '#f87171', bg: 'rgba(239,68,68,0.08)',  border: 'rgba(239,68,68,0.35)',  borderLeft: '#ef4444', badge: 'rgba(239,68,68,0.2)' },
+    'MÉDIA': { color: '#fbbf24', bg: 'rgba(245,158,11,0.08)', border: 'rgba(245,158,11,0.35)', borderLeft: '#f59e0b', badge: 'rgba(245,158,11,0.2)' },
+    'BAIXA': { color: '#34d399', bg: 'rgba(16,185,129,0.08)',  border: 'rgba(16,185,129,0.35)', borderLeft: '#10b981', badge: 'rgba(16,185,129,0.2)' }
+};
+
+const FAIL_TYPES = [
+    'Falha mecânica', 'Falha elétrica', 'Falha de software/sistema',
+    'Manutenção preventiva', 'Parada por calibração', 'Erro de operação',
+    'Contaminação de amostra', 'Falta de insumo/reagente', 'Outro'
+];
+
+function loadFailures() {
+    const saved = localStorage.getItem('lab_flow_failures');
+    if (saved) { try { failures = JSON.parse(saved); } catch(e) { failures = []; } }
+    renderFailures();
+}
+
+function setFailureFilter(btn) {
+    document.querySelectorAll('.fail-filter').forEach(b => {
+        b.style.background = '';
+        b.style.color = '';
+        b.style.borderColor = '';
+        b.classList.remove('active');
+    });
+    btn.classList.add('active');
+    btn.style.background = 'var(--color-primary)';
+    btn.style.color = 'white';
+    activeFailureFilter = btn.dataset.filter;
+    renderFailures();
+}
+
+function renderFailureStats() {
+    const stats = document.getElementById('failureStats');
+    if (!stats) return;
+    const alta  = failures.filter(f => f.priority === 'ALTA').length;
+    const media = failures.filter(f => f.priority === 'MÉDIA').length;
+    const baixa = failures.filter(f => f.priority === 'BAIXA').length;
+    const items = [
+        { label: 'Total de Registros', value: failures.length, color: '#94a3b8', icon: '<path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/>' },
+        { label: 'Prioridade Alta',    value: alta,            color: '#f87171', icon: '<path d="M10.29 3.86L1.82 18a2 2 0 0 0 1.71 3h16.94a2 2 0 0 0 1.71-3L13.71 3.86a2 2 0 0 0-3.42 0z"/><line x1="12" y1="9" x2="12" y2="13"/><line x1="12" y1="17" x2="12.01" y2="17"/>' },
+        { label: 'Prioridade Média',   value: media,           color: '#fbbf24', icon: '<circle cx="12" cy="12" r="10"/><line x1="12" y1="8" x2="12" y2="12"/><line x1="12" y1="16" x2="12.01" y2="16"/>' },
+        { label: 'Prioridade Baixa',   value: baixa,           color: '#34d399', icon: '<path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"/><polyline points="22 4 12 14.01 9 11.01"/>' },
+    ];
+    stats.innerHTML = items.map(s => `
+        <div style="background:var(--glass-bg); border:1px solid var(--glass-border); border-radius:12px; padding:1rem 1.2rem; display:flex; align-items:center; gap:0.8rem;">
+            <div style="width:40px; height:40px; border-radius:10px; background:${s.color}1a; display:flex; align-items:center; justify-content:center; flex-shrink:0;">
+                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="${s.color}" stroke-width="2">${s.icon}</svg>
+            </div>
+            <div>
+                <div style="font-size:1.6rem; font-weight:800; color:${s.color}; line-height:1;">${s.value}</div>
+                <div style="font-size:0.7rem; color:var(--text-tertiary); text-transform:uppercase; letter-spacing:0.05em; margin-top:2px;">${s.label}</div>
+            </div>
+        </div>`).join('');
+}
+
+function renderFailures() {
+    renderFailureStats();
+    const list = document.getElementById('failuresList');
+    if (!list) return;
+
+    const sorted = [...failures].sort((a,b) => new Date(b.date) - new Date(a.date));
+    const filtered = activeFailureFilter === 'TODOS' ? sorted : sorted.filter(f => f.priority === activeFailureFilter);
+
+    if (filtered.length === 0) {
+        list.innerHTML = `
+            <div style="grid-column:1/-1; text-align:center; padding:5rem 2rem; color:var(--text-tertiary);">
+                <svg width="72" height="72" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1" style="opacity:0.2; margin-bottom:1.5rem; display:block; margin-left:auto; margin-right:auto;"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"/><polyline points="22 4 12 14.01 9 11.01"/></svg>
+                <p style="font-size:1rem; font-weight:600;">Nenhuma ocorrência ${activeFailureFilter !== 'TODOS' ? 'com prioridade ' + activeFailureFilter : ''} registrada.</p>
+                <p style="font-size:0.8rem; margin-top:0.5rem;">Clique em "Nova Ocorrência" para registrar.</p>
+            </div>`;
+        return;
+    }
+
+    list.innerHTML = filtered.map((f, i) => {
+        const idx = failures.indexOf(f);
+        const s = PRIORITY_STYLES[f.priority] || PRIORITY_STYLES['ALTA'];
+        return `
+        <div style="background:${s.bg}; border:1px solid ${s.border}; border-left:4px solid ${s.borderLeft}; border-radius:12px; overflow:hidden; box-shadow:0 4px 15px rgba(0,0,0,0.2); transition:transform 0.2s;" onmouseover="this.style.transform='translateY(-3px)'" onmouseout="this.style.transform='translateY(0)'">
+            <div style="padding:1rem 1.2rem; display:flex; justify-content:space-between; align-items:flex-start; border-bottom:1px solid ${s.border};">
+                <div style="display:flex; align-items:center; gap:0.6rem; flex:1; min-width:0;">
+                    <span style="font-size:0.7rem; font-weight:800; background:${s.badge}; color:${s.color}; padding:3px 10px; border-radius:20px; letter-spacing:0.05em; flex-shrink:0;">${f.priority}</span>
+                    <span style="font-size:1rem; font-weight:700; color:var(--text-primary); white-space:nowrap; overflow:hidden; text-overflow:ellipsis;">${f.equipment}</span>
+                </div>
+                <button onclick="deleteFailure(${idx})" title="Excluir" style="background:none; border:none; cursor:pointer; color:var(--text-tertiary); padding:4px; border-radius:6px; transition:all 0.2s; flex-shrink:0; margin-left:0.5rem;" onmouseover="this.style.color='#ef4444'; this.style.background='rgba(239,68,68,0.1)'" onmouseout="this.style.color=''; this.style.background='none'">
+                    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="3 6 5 6 21 6"/><path d="M19 6l-1 14H6L5 6"/><path d="M10 11v6M14 11v6"/><path d="M9 6V4h6v2"/></svg>
+                </button>
+            </div>
+            <div style="padding:1rem 1.2rem;">
+                ${f.type ? `<span style="font-size:0.72rem; font-weight:700; color:${s.color}; text-transform:uppercase; letter-spacing:0.05em; opacity:0.8;">${f.type}</span><br>` : ''}
+                <p style="margin:${f.type ? '0.4rem' : '0'} 0 0.8rem 0; font-size:0.9rem; color:var(--text-primary); line-height:1.5;">${f.description}</p>
+                <div style="display:flex; justify-content:space-between; align-items:center; padding-top:0.6rem; border-top:1px solid ${s.border};">
+                    <div style="display:flex; align-items:center; gap:0.4rem; color:var(--text-tertiary); font-size:0.72rem;">
+                        <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>
+                        ${new Date(f.date).toLocaleString('pt-BR', {day:'2-digit',month:'2-digit',year:'numeric',hour:'2-digit',minute:'2-digit'})}
+                    </div>
+                    <div style="display:flex; align-items:center; gap:0.4rem; color:var(--text-tertiary); font-size:0.72rem; font-weight:700;">
+                        <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg>
+                        ${f.operator || f.user || 'Operador'}
+                    </div>
+                </div>
+            </div>
+        </div>`;
+    }).join('');
+}
+
+function openFailureModal() {
+    const allEquips = [];
+    Object.values(EQUIPMENTS_MAP).forEach(lst => lst.filter(e => e.type !== 'furnace_group').forEach(e => allEquips.push(e.name)));
+    allEquips.push('DCF-1', 'DCF-3', 'Outro');
+
+    const modalHtml = `
+        <div id="failureModal" class="modal-backdrop" style="display:flex; opacity:1;">
+            <div class="modal-content" style="transform:scale(1); max-width:560px;">
+                <h2 class="modal-title">
+                    <svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="#ef4444" stroke-width="2"><path d="M10.29 3.86L1.82 18a2 2 0 0 0 1.71 3h16.94a2 2 0 0 0 1.71-3L13.71 3.86a2 2 0 0 0-3.42 0z"/><line x1="12" y1="9" x2="12" y2="13"/><line x1="12" y1="17" x2="12.01" y2="17"/></svg>
+                    Nova Ocorrência
+                </h2>
+
+                <div style="display:grid; grid-template-columns:1fr 1fr; gap:0.8rem; margin-bottom:1rem;">
+                    <div>
+                        <label style="display:block; font-size:0.7rem; font-weight:700; color:var(--text-secondary); margin-bottom:0.5rem; text-transform:uppercase; letter-spacing:0.05em;">Equipamento *</label>
+                        <select id="failEquip" class="message-input" style="margin:0; font-size:0.9rem; padding:0.65rem;">
+                            <option value="">Selecione...</option>
+                            ${allEquips.map(n => `<option value="${n}">${n}</option>`).join('')}
+                        </select>
+                    </div>
+                    <div>
+                        <label style="display:block; font-size:0.7rem; font-weight:700; color:var(--text-secondary); margin-bottom:0.5rem; text-transform:uppercase; letter-spacing:0.05em;">Prioridade *</label>
+                        <select id="failPriority" class="message-input" style="margin:0; font-size:0.9rem; padding:0.65rem;">
+                            <option value="ALTA">🔴 Alta / Urgente</option>
+                            <option value="MÉDIA">🟡 Média</option>
+                            <option value="BAIXA">🟢 Baixa</option>
+                        </select>
+                    </div>
+                </div>
+
+                <div style="margin-bottom:1rem;">
+                    <label style="display:block; font-size:0.7rem; font-weight:700; color:var(--text-secondary); margin-bottom:0.5rem; text-transform:uppercase; letter-spacing:0.05em;">Tipo de Falha</label>
+                    <select id="failType" class="message-input" style="margin:0; font-size:0.9rem; padding:0.65rem;">
+                        <option value="">Selecione o tipo (opcional)...</option>
+                        ${FAIL_TYPES.map(t => `<option value="${t}">${t}</option>`).join('')}
+                    </select>
+                </div>
+
+                <div style="margin-bottom:1rem;">
+                    <label style="display:block; font-size:0.7rem; font-weight:700; color:var(--text-secondary); margin-bottom:0.5rem; text-transform:uppercase; letter-spacing:0.05em;">Operador / Responsável *</label>
+                    <input type="text" id="failOperator" class="message-input" placeholder="Nome do operador..." style="margin:0; font-size:0.9rem; padding:0.65rem; min-height:auto; resize:none;">
+                </div>
+
+                <div style="margin-bottom:1.5rem;">
+                    <label style="display:block; font-size:0.7rem; font-weight:700; color:var(--text-secondary); margin-bottom:0.5rem; text-transform:uppercase; letter-spacing:0.05em;">Descrição da Ocorrência *</label>
+                    <textarea id="failDesc" class="message-input" placeholder="Descreva detalhadamente o que aconteceu..." style="margin:0; min-height:90px;"></textarea>
+                </div>
+
+                <div class="modal-btns">
+                    <button class="btn-cancel" onclick="document.getElementById('failureModal').remove()">Cancelar</button>
+                    <button class="btn-confirm" onclick="saveFailure()">Registrar Ocorrência</button>
+                </div>
+            </div>
+        </div>`;
+    document.body.insertAdjacentHTML('beforeend', modalHtml);
+    setTimeout(() => document.getElementById('failEquip').focus(), 50);
+}
+
+function saveFailure() {
+    const equip    = document.getElementById('failEquip').value;
+    const priority = document.getElementById('failPriority').value;
+    const type     = document.getElementById('failType').value;
+    const operator = document.getElementById('failOperator').value.trim();
+    const desc     = document.getElementById('failDesc').value.trim();
+
+    if (!equip || !operator || !desc) {
+        showToast("Preencha: Equipamento, Operador e Descrição!", true);
+        return;
+    }
+
+    failures.push({ equipment: equip, priority, type, operator, description: desc, date: new Date().toISOString() });
+    localStorage.setItem('lab_flow_failures', JSON.stringify(failures));
+    renderFailures();
+    document.getElementById('failureModal').remove();
+    showToast("Ocorrência registrada com sucesso!");
+}
+
+function deleteFailure(index) {
+    if (!confirm("Deseja realmente excluir este registro?")) return;
+    failures.splice(index, 1);
+    localStorage.setItem('lab_flow_failures', JSON.stringify(failures));
+    renderFailures();
+    showToast("Registro excluído.");
+}
+
+// ===========================================================
+//  LÓGICA APONTAMENTO DE PRODUÇÃO (USER VERSION + SUPABASE)
+// ===========================================================
+let apHistory = [];
+
+async function initApontamento() {
+    const selCelula = document.getElementById('id-cedula');
+    if (!selCelula) return;
+
+    // Popula células
+    const todas = [...CELLS, ...DCF_CELLS];
+    todas.forEach(c => {
+        const opt = document.createElement('option');
+        opt.value = c.name;
+        opt.textContent = c.name;
+        selCelula.appendChild(opt);
+    });
+
+    // Carrega histórico do Supabase ou Local
+    await loadApontamentos();
+    
+    // Escuta mudanças em tempo real para Apontamentos
+    if (_supabase) {
+        _supabase.channel('lab-flow-ap')
+            .on('postgres_changes', { event: '*', schema: 'public', table: 'lab_flow_apontamentos' }, payload => {
+                loadApontamentos(); // Recarrega ao haver mudanças
+            })
+            .subscribe();
+    }
+
+    updateApClock();
+    setInterval(updateApClock, 1000);
+}
+
+async function loadApontamentos() {
+    if (_supabase) {
+        const { data, error } = await _supabase
+            .from('lab_flow_apontamentos')
+            .select('*')
+            .order('timestamp', { ascending: false })
+            .limit(50);
+
+        if (!error && data) {
+            apHistory = data.map(d => ({
+                id: d.id,
+                celula: d.celula,
+                equip: d.equipamento,
+                tipo: d.tipo,
+                operador: d.operador,
+                inicio: d.inicio,
+                fim: d.fim,
+                descricao: d.descricao,
+                timestamp: d.timestamp
+            }));
+        }
+    } else {
+        const saved = localStorage.getItem('lab_flow_apHistory');
+        if (saved) { try { apHistory = JSON.parse(saved); } catch(e) { apHistory = []; } }
+    }
+    renderApHistory();
+}
+
+function updateApEquipments() {
+    const celula = document.getElementById('id-cedula').value;
+    const container = document.getElementById('apEquipContainer');
+    container.innerHTML = '';
+
+    if (!celula || !EQUIPMENTS_MAP[celula]) {
+        container.innerHTML = '<span style="color:var(--text-tertiary); font-size: 0.85rem; font-style: italic;">Selecione uma célula primeiro...</span>';
+        return;
+    }
+
+    // Botão "Selecionar Todos"
+    const selectAllBtn = document.createElement('div');
+    selectAllBtn.className = 'ap-check-item';
+    selectAllBtn.style.borderStyle = 'dashed';
+    selectAllBtn.innerHTML = '⚡ Selecionar Todos';
+    selectAllBtn.onclick = () => {
+        const checks = container.querySelectorAll('input[type="checkbox"]');
+        const allSet = Array.from(checks).every(c => c.checked);
+        checks.forEach(c => {
+            c.checked = !allSet;
+            c.parentElement.classList.toggle('active', !allSet);
+        });
+    };
+    container.appendChild(selectAllBtn);
+
+    // Lista de Equipamentos
+    EQUIPMENTS_MAP[celula].forEach(e => {
+        const label = document.createElement('label');
+        label.className = 'ap-check-item';
+        
+        const checkbox = document.createElement('input');
+        checkbox.type = 'checkbox';
+        checkbox.value = e.name;
+        checkbox.onchange = () => label.classList.toggle('active', checkbox.checked);
+
+        label.appendChild(checkbox);
+        label.appendChild(document.createTextNode(e.name));
+        container.appendChild(label);
+    });
+}
+
+function updateApClock() {
+    const el = document.getElementById('apTimeLabel');
+    if (!el) return;
+    const now = new Date();
+    const dateStr = now.toLocaleDateString('pt-BR');
+    const timeStr = now.toLocaleTimeString('pt-BR', { hour: '2-digit', minute: '2-digit' });
+    el.textContent = `Data: ${dateStr} | ${timeStr}`;
+}
+
+async function registerApontamento() {
+    const selEquips = Array.from(document.querySelectorAll('#apEquipContainer input[type="checkbox"]:checked')).map(c => c.value);
+    
+    const data = {
+        celula: document.getElementById('id-cedula').value,
+        equipamento: selEquips.join(', '),
+        tipo: document.getElementById('tipo-parada').value,
+        operador: document.getElementById('id-operador').value.trim(),
+        inicio: document.getElementById('hora-inicio').value,
+        fim: document.getElementById('hora-fim').value || null,
+        descricao: document.getElementById('descricao-falha').value.trim(),
+        timestamp: new Date().toISOString()
+    };
+
+    if (!data.celula || selEquips.length === 0 || !data.tipo || !data.operador || !data.inicio || !data.descricao) {
+        showToast("Por favor, preencha todos os campos obrigatórios!", true);
+        return;
+    }
+
+    if (_supabase) {
+        const { error } = await _supabase.from('lab_flow_apontamentos').insert([data]);
+        if (error) {
+            console.error("Erro Supabase:", error);
+            showToast("Erro ao sincronizar com servidor!", true);
+            // Fallback local caso queira
+        } else {
+            showToast("Apontamento sincronizado!");
+        }
+    } else {
+        const localData = { ...data, id: Date.now(), equip: data.equipamento };
+        apHistory.unshift(localData);
+        localStorage.setItem('lab_flow_apHistory', JSON.stringify(apHistory));
+        renderApHistory();
+        showToast("Registrado Localmente (Offline)");
+    }
+    
+    // Reset form
+    document.getElementById('id-operador').value = '';
+    document.getElementById('hora-inicio').value = '';
+    document.getElementById('hora-fim').value = '';
+    document.getElementById('descricao-falha').value = '';
+    // Unset checkboxes
+    document.querySelectorAll('#apEquipContainer input[type="checkbox"]').forEach(c => {
+        c.checked = false;
+        c.parentElement.classList.remove('active');
+    });
+}
+
+function renderApHistory() {
+    const body = document.getElementById('apHistBody');
+    if (!body) return;
+
+    if (apHistory.length === 0) {
+        body.innerHTML = '<tr><td colspan="7" style="text-align:center; color:#999; padding:30px;">Nenhum registro no histórico.</td></tr>';
+        return;
+    }
+
+    body.innerHTML = apHistory.map((h, i) => {
+        let badgeCls = 'ap-badge-parada';
+        let statusTxt = h.tipo;
+        if (h.tipo === 'FALHA') badgeCls = 'ap-badge-falha';
+        if (h.tipo === 'OBSERVAÇÃO') badgeCls = 'ap-badge-obs';
+
+        const dt = new Date(h.timestamp);
+        const dateStr = `${dt.getDate().toString().padStart(2,'0')}/${(dt.getMonth()+1).toString().padStart(2,'0')}`;
+        const timeStr = h.inicio;
+
+        return `
+            <tr>
+                <td>${dateStr} ${timeStr}</td>
+                <td>${h.celula}</td>
+                <td>${h.equip}</td>
+                <td><span class="ap-status-badge ${badgeCls}">${statusTxt}</span></td>
+                <td>${h.descricao}</td>
+                <td>${h.operador}</td>
+                <td style="text-align:right;">
+                    <button onclick="deleteApontamento(${i})" style="background:none; border:none; color:#ccc; cursor:pointer;" onmouseover="this.style.color='#d9534f'">
+                        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="3 6 5 6 21 6"/><path d="M19 6l-1 14H6L5 6"/><path d="M10 11v6M14 11v6"/><path d="M9 6V4h6v2"/></svg>
+                    </button>
+                </td>
+            </tr>
+        `;
+    }).join('');
+}
+
+async function deleteApontamento(index) {
+    if (!confirm("Excluir registro permanentemente?")) return;
+    
+    const item = apHistory[index];
+    if (_supabase && item.id) {
+        const { error } = await _supabase.from('lab_flow_apontamentos').delete().eq('id', item.id);
+        if (error) {
+            showToast("Erro ao excluir do servidor!", true);
+            return;
+        }
+        showToast("Excluído do servidor!");
+    } else {
+        apHistory.splice(index, 1);
+        localStorage.setItem('lab_flow_apHistory', JSON.stringify(apHistory));
+        renderApHistory();
+        showToast("Excluído localmente.");
+    }
+}
+
+// Iniciar carregamento
+document.addEventListener('DOMContentLoaded', () => {
+    loadFailures();
+    initApontamento();
+});
 </script>
 </body>
 </html>
