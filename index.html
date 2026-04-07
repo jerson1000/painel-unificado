@@ -2081,7 +2081,11 @@ async function loadApontamentos() {
             .order('timestamp', { ascending: false })
             .limit(50);
 
-        if (!error && data) {
+        if (error) {
+            console.error("ERRO AO CARREGAR HISTÓRICO:", error.message);
+            // Se houver erro de permissão (RLS), avisamos no console
+            if (error.code === '42501') console.warn("DICA: Verifique se o RLS está desativado na tabela 'lab_flow_apontamentos' no Supabase.");
+        } else if (data) {
             apHistory = data.map(d => ({
                 id: d.id,
                 celula: d.celula,
@@ -2093,6 +2097,7 @@ async function loadApontamentos() {
                 descricao: d.descricao,
                 timestamp: d.timestamp
             }));
+            console.log("Histórico carregado:", apHistory.length, "registros.");
         }
     } else {
         const saved = localStorage.getItem('lab_flow_apHistory');
@@ -2154,48 +2159,74 @@ function updateApClock() {
 async function registerApontamento() {
     const selEquips = Array.from(document.querySelectorAll('#apEquipContainer input[type="checkbox"]:checked')).map(c => c.value);
     
+    // Elementos
+    const elOperador = document.getElementById('id-operador');
+    const elInicio = document.getElementById('hora-inicio');
+    const elDesc = document.getElementById('descricao-falha');
+    const elTipo = document.getElementById('tipo-parada');
+    const elCelula = document.getElementById('id-cedula');
+
     const data = {
-        celula: document.getElementById('id-cedula').value,
+        celula: elCelula.value,
         equipamento: selEquips.join(', '),
-        tipo: document.getElementById('tipo-parada').value,
-        operador: document.getElementById('id-operador').value.trim(),
-        inicio: document.getElementById('hora-inicio').value,
+        tipo: elTipo.value,
+        operador: elOperador.value.trim(),
+        inicio: elInicio.value,
         fim: document.getElementById('hora-fim').value || null,
-        descricao: document.getElementById('descricao-falha').value.trim(),
+        descricao: elDesc.value.trim(),
         timestamp: new Date().toISOString()
     };
 
-    if (!data.celula || selEquips.length === 0 || !data.tipo || !data.operador || !data.inicio || !data.descricao) {
-        showToast("Por favor, preencha todos os campos obrigatórios!", true);
-        return;
-    }
+    // Validação com Feedback Específico
+    if (!data.celula) { showToast("Selecione uma Célula!", true); return; }
+    if (selEquips.length === 0) { showToast("Selecione ao menos um Equipamento!", true); return; }
+    if (!data.tipo) { showToast("Selecione o Tipo de Apontamento!", true); return; }
+    if (!data.operador) { showToast("Digite o ID do Operador!", true); elOperador.focus(); return; }
+    if (!data.inicio) { showToast("Preencha o horário de Início!", true); elInicio.focus(); return; }
+    if (!data.descricao) { showToast("Descreva o motivo da parada!", true); elDesc.focus(); return; }
+
+    // Bloqueia botão para evitar duplo clique
+    const btn = document.querySelector('.ap-btn-submit');
+    const originalText = btn.innerText;
+    btn.disabled = true;
+    btn.innerText = "Registrando...";
 
     if (_supabase) {
         const { error } = await _supabase.from('lab_flow_apontamentos').insert([data]);
         if (error) {
             console.error("Erro Supabase:", error);
-            showToast("Erro ao sincronizar com servidor!", true);
-            // Fallback local caso queira
+            showToast("Erro de conexão com o banco de dados!", true);
+            btn.disabled = false;
+            btn.innerText = originalText;
         } else {
-            showToast("Apontamento sincronizado!");
+            showToast("Apontamento sincronizado com sucesso!");
+            clearApForm();
+            loadApontamentos(); // Força recarga
         }
     } else {
         const localData = { ...data, id: Date.now(), equip: data.equipamento };
         apHistory.unshift(localData);
         localStorage.setItem('lab_flow_apHistory', JSON.stringify(apHistory));
         renderApHistory();
-        showToast("Registrado Localmente (Offline)");
+        showToast("Registrado localmente (Offline)");
+        clearApForm();
     }
-    
-    // Reset form
+}
+
+function clearApForm() {
     document.getElementById('id-operador').value = '';
     document.getElementById('hora-inicio').value = '';
     document.getElementById('hora-fim').value = '';
     document.getElementById('descricao-falha').value = '';
-    // Unset checkboxes
-    document.querySelectorAll('#apEquipContainer input[type="checkbox"]').forEach(c => {
-        c.checked = false;
-        c.parentElement.classList.remove('active');
+    const btn = document.querySelector('.ap-btn-submit');
+    btn.disabled = false;
+    btn.innerText = "Registrar Apontamento";
+    
+    // Desmarcar equipamentos
+    document.querySelectorAll('#apEquipContainer .ap-check-item').forEach(chip => {
+        const cb = chip.querySelector('input');
+        if(cb) cb.checked = false;
+        chip.classList.remove('active');
     });
 }
 
