@@ -7,7 +7,7 @@ const supabase = createClient(
 
 export default async function handler(req, res) {
   const { data, error } = await supabase
-    .from('SUA_TABELA_AQUI')
+    .from('lab_flow_apontamentos')
     .select('*');
 
   if (error) {
@@ -17,4 +17,3 @@ export default async function handler(req, res) {
 
   res.status(200).json(data);
 }
-``
